@@ -1,0 +1,1788 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PhishGuard | Phishing Website Detection</title>
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ====================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(0, 212, 255, 0.14),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(99, 102, 241, 0.13),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(14, 165, 233, 0.08),
+                    transparent 35%
+                ),
+                #050816;
+
+            color: #eaf2ff;
+
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ====================================================== */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 24px 0;
+
+            border-bottom:
+                1px solid rgba(148, 163, 184, 0.10);
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #06b6d4,
+                    #2563eb,
+                    #6366f1
+                );
+
+            color: white;
+
+            font-size: 22px;
+
+            box-shadow:
+                0 0 25px rgba(6, 182, 212, 0.25);
+        }
+
+
+        .brand-text h1 {
+            font-size: 19px;
+            color: #ffffff;
+
+            margin-bottom: 3px;
+
+            letter-spacing: 0.3px;
+        }
+
+
+        .brand-text p {
+            font-size: 10px;
+
+            color: #718096;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+        }
+
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            padding:
+                8px 13px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(34, 197, 94, 0.07);
+
+            border:
+                1px solid rgba(34, 197, 94, 0.14);
+
+            color: #86efac;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 12px rgba(34, 197, 94, 0.9);
+        }
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+            text-align: center;
+
+            padding:
+                75px 20px
+                48px;
+        }
+
+
+        .hero-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding:
+                8px 16px;
+
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(6, 182, 212, 0.10),
+                    rgba(99, 102, 241, 0.10)
+                );
+
+            border:
+                1px solid rgba(96, 165, 250, 0.18);
+
+            color: #67e8f9;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            letter-spacing: 1.7px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero h2 {
+            font-size:
+                clamp(35px, 5vw, 60px);
+
+            line-height: 1.08;
+
+            max-width: 900px;
+
+            margin: auto;
+
+            color: #f8fbff;
+
+            letter-spacing: -1.5px;
+        }
+
+
+        .hero h2 span {
+            background:
+                linear-gradient(
+                    90deg,
+                    #22d3ee,
+                    #60a5fa,
+                    #818cf8
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .hero p {
+            max-width: 720px;
+
+            margin:
+                22px auto 0;
+
+            color: #8996ad;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           ANALYZER CARD
+        ====================================================== */
+
+        .analyzer-card {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15, 23, 42, 0.94),
+                    rgba(8, 15, 32, 0.94)
+                );
+
+            border:
+                1px solid rgba(71, 182, 255, 0.12);
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.40),
+                0 0 50px rgba(37, 99, 235, 0.05);
+
+            overflow: hidden;
+        }
+
+
+        .analyzer-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #06b6d4,
+                    #6366f1,
+                    transparent
+                );
+
+            opacity: 0.8;
+        }
+
+
+        .section-title {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 19px;
+        }
+
+
+        .section-title h3 {
+            font-size: 15px;
+
+            color: #f1f5f9;
+
+            letter-spacing: 0.2px;
+        }
+
+
+        .section-title span {
+            font-size: 10px;
+
+            color: #64748b;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.3px;
+        }
+
+
+        /* =====================================================
+           INPUT
+        ====================================================== */
+
+        .input-group {
+            display: flex;
+
+            gap: 12px;
+        }
+
+
+        .input-group input {
+            flex: 1;
+
+            height: 58px;
+
+            border-radius: 15px;
+
+            border:
+                1px solid rgba(100, 116, 139, 0.20);
+
+            background:
+                rgba(2, 6, 23, 0.80);
+
+            color: #f8fafc;
+
+            padding:
+                0 19px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            transition:
+                border 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .input-group input::placeholder {
+            color: #475569;
+        }
+
+
+        .input-group input:focus {
+            border-color:
+                rgba(34, 211, 238, 0.55);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(6, 182, 212, 0.08),
+                0 0 25px
+                rgba(6, 182, 212, 0.05);
+        }
+
+
+        /* =====================================================
+           ANALYZE BUTTON
+        ====================================================== */
+
+        .analyze-btn {
+            height: 58px;
+
+            padding:
+                0 28px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            cursor: pointer;
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0891b2,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(37, 99, 235, 0.25);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .analyze-btn:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 15px 40px
+                rgba(37, 99, 235, 0.40);
+        }
+
+
+        /* =====================================================
+           RESULT CARD
+        ====================================================== */
+
+        .result-card {
+            margin-top: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15, 23, 42, 0.94),
+                    rgba(8, 15, 32, 0.94)
+                );
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 25px 80px
+                rgba(0, 0, 0, 0.35);
+        }
+
+
+        .result-header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 18px;
+        }
+
+
+        .result-main {
+            display: flex;
+
+            align-items: center;
+
+            gap: 17px;
+        }
+
+
+        .result-icon {
+            width: 60px;
+            height: 60px;
+
+            border-radius: 17px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+
+        .result-title {
+            font-size: 23px;
+
+            color: #f8fafc;
+
+            margin-bottom: 6px;
+        }
+
+
+        .result-url {
+            font-size: 12px;
+
+            color: #64748b;
+
+            word-break: break-all;
+        }
+
+
+        /* =====================================================
+           CONFIDENCE
+        ====================================================== */
+
+        .confidence {
+            text-align: right;
+        }
+
+
+        .confidence-label {
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            color: #64748b;
+
+            letter-spacing: 1.4px;
+        }
+
+
+        .confidence-value {
+            font-size: 28px;
+
+            font-weight: bold;
+
+            margin-top: 3px;
+        }
+
+
+        /* =====================================================
+           PHISHING
+        ====================================================== */
+
+        .result-card.phishing {
+            border:
+                1px solid rgba(248, 113, 113, 0.20);
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.35),
+                0 0 35px rgba(239, 68, 68, 0.04);
+        }
+
+
+        .result-card.phishing .result-icon {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(239, 68, 68, 0.18),
+                    rgba(249, 115, 22, 0.12)
+                );
+
+            border:
+                1px solid rgba(248, 113, 113, 0.15);
+
+            color: #fb7185;
+
+            box-shadow:
+                0 0 25px
+                rgba(239, 68, 68, 0.10);
+        }
+
+
+        .result-card.phishing .confidence-value {
+            color: #fb7185;
+        }
+
+
+        /* =====================================================
+           LEGITIMATE
+        ====================================================== */
+
+        .result-card.legitimate {
+            border:
+                1px solid rgba(45, 212, 191, 0.20);
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.35),
+                0 0 35px rgba(20, 184, 166, 0.04);
+        }
+
+
+        .result-card.legitimate .result-icon {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(34, 197, 94, 0.16),
+                    rgba(20, 184, 166, 0.12)
+                );
+
+            border:
+                1px solid rgba(45, 212, 191, 0.15);
+
+            color: #4ade80;
+
+            box-shadow:
+                0 0 25px
+                rgba(34, 197, 94, 0.08);
+        }
+
+
+        .result-card.legitimate .confidence-value {
+            color: #4ade80;
+        }
+
+
+        /* =====================================================
+           EXPLANATION
+        ====================================================== */
+
+        .explanation {
+            margin-top: 25px;
+
+            padding:
+                19px 21px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(2, 6, 23, 0.48);
+
+            border:
+                1px solid rgba(100, 116, 139, 0.14);
+
+            color: #aebbd0;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        .explanation-title {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #f1f5f9;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* =====================================================
+           PROBABILITIES
+        ====================================================== */
+
+        .probability-section {
+            margin-top: 29px;
+        }
+
+
+        .probability-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 16px;
+        }
+
+
+        .probability-box {
+            padding: 19px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(2, 6, 23, 0.48);
+
+            border:
+                1px solid rgba(100, 116, 139, 0.12);
+        }
+
+
+        .probability-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 11px;
+        }
+
+
+        .probability-top span:first-child {
+            color: #8996ad;
+
+            font-size: 12px;
+        }
+
+
+        .probability-value {
+            color: #e2e8f0;
+
+            font-weight: bold;
+
+            font-size: 12px;
+        }
+
+
+        .progress {
+            height: 8px;
+
+            border-radius: 999px;
+
+            background:
+                #172033;
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+            height: 100%;
+
+            border-radius: 999px;
+
+            transition:
+                width 0.6s ease;
+        }
+
+
+        .phishing-bar {
+            background:
+                linear-gradient(
+                    90deg,
+                    #ef4444,
+                    #f97316
+                );
+
+            box-shadow:
+                0 0 10px
+                rgba(239, 68, 68, 0.25);
+        }
+
+
+        .legitimate-bar {
+            background:
+                linear-gradient(
+                    90deg,
+                    #10b981,
+                    #22d3ee
+                );
+
+            box-shadow:
+                0 0 10px
+                rgba(34, 211, 238, 0.20);
+        }
+
+
+        /* =====================================================
+           FEATURES
+        ====================================================== */
+
+        .features-section {
+            margin-top: 30px;
+        }
+
+
+        .features-title {
+            font-size: 15px;
+
+            color: #f1f5f9;
+
+            margin-bottom: 15px;
+        }
+
+
+        .features-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 11px;
+        }
+
+
+        .feature-box {
+            padding: 16px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(2, 6, 23, 0.45);
+
+            border:
+                1px solid rgba(100, 116, 139, 0.10);
+
+            min-height: 84px;
+
+            transition:
+                border 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .feature-box:hover {
+            border-color:
+                rgba(34, 211, 238, 0.20);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .feature-name {
+            color: #64748b;
+
+            font-size: 10px;
+
+            line-height: 1.4;
+
+            margin-bottom: 8px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
+        }
+
+
+        .feature-value {
+            color: #dce8f8;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           DISCLAIMER
+        ====================================================== */
+
+        .disclaimer {
+            margin-top: 24px;
+
+            padding:
+                15px 17px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(245, 158, 11, 0.045);
+
+            border:
+                1px solid rgba(245, 158, 11, 0.12);
+
+            color: #8290a5;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+        }
+
+
+        .disclaimer strong {
+            color: #fbbf24;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+            text-align: center;
+
+            padding:
+                45px 0
+                55px;
+
+            color: #475569;
+
+            font-size: 12px;
+        }
+
+
+        .developer {
+            color: #8290a5;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .developer strong {
+            background:
+                linear-gradient(
+                    90deg,
+                    #22d3ee,
+                    #818cf8
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            font-weight: bold;
+        }
+
+
+        .copyright {
+            color: #475569;
+
+            font-size: 11px;
+        }
+
+
+        .copyright span {
+            color: #64748b;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 900px) {
+
+            .features-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .topbar {
+                align-items: flex-start;
+
+                gap: 15px;
+
+                flex-direction: column;
+            }
+
+
+            .system-status {
+                align-self: flex-end;
+            }
+
+
+            .hero {
+                padding-top: 48px;
+            }
+
+
+            .input-group {
+                flex-direction: column;
+            }
+
+
+            .analyze-btn {
+                width: 100%;
+            }
+
+
+            .result-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .confidence {
+                text-align: left;
+            }
+
+
+            .probability-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 94%;
+            }
+
+
+            .analyzer-card,
+            .result-card {
+                padding: 21px;
+            }
+
+
+            .features-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .hero h2 {
+                font-size: 35px;
+
+                letter-spacing: -1px;
+            }
+
+
+            .hero p {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+
+        <div class="brand">
+
+
+            <div class="brand-icon">
+                🛡
+            </div>
+
+
+            <div class="brand-text">
+
+                <h1>
+                    PhishGuard
+                </h1>
+
+                <p>
+                    URL Security Analysis
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="system-status">
+
+            <div class="status-dot"></div>
+
+            System Online
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero">
+
+
+        <div class="hero-badge">
+
+            Machine Learning Security Scanner
+
+        </div>
+
+
+        <h2>
+
+            Detect suspicious websites
+
+            <span>
+                before you trust them.
+            </span>
+
+        </h2>
+
+
+        <p>
+
+            Analyze a website URL using machine-learning-based
+            phishing detection. The system examines URL characteristics
+            and learned patterns to identify potentially dangerous websites.
+
+        </p>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ANALYZER
+    ====================================================== -->
+
+    <section class="analyzer-card">
+
+
+        <div class="section-title">
+
+            <h3>
+                URL Security Analyzer
+            </h3>
+
+
+            <span>
+                Real-time Analysis
+            </span>
+
+        </div>
+
+
+        <form method="POST">
+
+
+            <div class="input-group">
+
+
+                <input
+                    type="text"
+                    name="url"
+                    value="{{ url }}"
+                    placeholder="Enter website URL (e.g. https://example.com)"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="analyze-btn"
+                >
+
+                    ANALYZE URL
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RESULT
+    ====================================================== -->
+
+    {% if result %}
+
+
+    <section
+        class="result-card
+        {% if 'Phishing' in result %}
+            phishing
+        {% else %}
+            legitimate
+        {% endif %}"
+    >
+
+
+        <!-- RESULT HEADER -->
+
+        <div class="result-header">
+
+
+            <div class="result-main">
+
+
+                <div class="result-icon">
+
+
+                    {% if 'Phishing' in result %}
+
+                        !
+
+                    {% else %}
+
+                        ✓
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <div>
+
+
+                    <div class="result-title">
+
+                        {{ result }}
+
+                    </div>
+
+
+                    <div class="result-url">
+
+                        {{ url }}
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- CONFIDENCE -->
+
+            <div class="confidence">
+
+
+                <div class="confidence-label">
+
+                    Model Confidence
+
+                </div>
+
+
+                <div class="confidence-value">
+
+
+                    {% if 'Phishing' in result %}
+
+                        {{ "%.2f"|format(
+                            phishing_probability * 100
+                        ) }}%
+
+                    {% else %}
+
+                        {{ "%.2f"|format(
+                            legitimate_probability * 100
+                        ) }}%
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             EXPLANATION
+        ================================================== -->
+
+        <div class="explanation">
+
+
+            <div class="explanation-title">
+
+
+                {% if 'Phishing' in result %}
+
+                    ⚠ Why this URL was flagged
+
+                {% else %}
+
+                    ✓ Why this URL was classified as legitimate
+
+                {% endif %}
+
+
+            </div>
+
+
+            <div>
+
+                {{ explanation }}
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             PROBABILITIES
+        ================================================== -->
+
+        <div class="probability-section">
+
+
+            <div class="section-title">
+
+
+                <h3>
+                    Prediction Probabilities
+                </h3>
+
+
+                <span>
+                    Model Output
+                </span>
+
+
+            </div>
+
+
+            <div class="probability-grid">
+
+
+                <!-- PHISHING -->
+
+                <div class="probability-box">
+
+
+                    <div class="probability-top">
+
+
+                        <span>
+                            Phishing Probability
+                        </span>
+
+
+                        <span class="probability-value">
+
+                            {{ "%.2f"|format(
+                                phishing_probability * 100
+                            ) }}%
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="progress">
+
+
+                        <div
+                            class="progress-bar phishing-bar"
+                            style="
+                                width:
+                                {{ phishing_probability * 100 }}%;
+                            "
+                        ></div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- LEGITIMATE -->
+
+                <div class="probability-box">
+
+
+                    <div class="probability-top">
+
+
+                        <span>
+                            Legitimate Probability
+                        </span>
+
+
+                        <span class="probability-value">
+
+                            {{ "%.2f"|format(
+                                legitimate_probability * 100
+                            ) }}%
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="progress">
+
+
+                        <div
+                            class="progress-bar legitimate-bar"
+                            style="
+                                width:
+                                {{ legitimate_probability * 100 }}%;
+                            "
+                        ></div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             URL CHARACTERISTICS
+        ================================================== -->
+
+        {% if features %}
+
+
+        <div class="features-section">
+
+
+            <div class="features-title">
+
+                URL Characteristics Analyzed
+
+            </div>
+
+
+            <div class="features-grid">
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        URL Length
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[0] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Domain Length
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[1] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Domain is IP
+                    </div>
+
+                    <div class="feature-value">
+
+                        {% if features[2] == 1 %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        TLD Length
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[3] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Number of Subdomains
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[4] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Obfuscation Detected
+                    </div>
+
+                    <div class="feature-value">
+
+                        {% if features[5] == 1 %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Obfuscated Characters
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[6] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Obfuscation Ratio
+                    </div>
+
+                    <div class="feature-value">
+                        {{ "%.4f"|format(features[7]) }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Letters in URL
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[8] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Letter Ratio
+                    </div>
+
+                    <div class="feature-value">
+                        {{ "%.4f"|format(features[9]) }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Digits in URL
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[10] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Digit Ratio
+                    </div>
+
+                    <div class="feature-value">
+                        {{ "%.4f"|format(features[11]) }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Equal Signs
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[12] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Question Marks
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[13] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Ampersands
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[14] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Other Special Characters
+                    </div>
+
+                    <div class="feature-value">
+                        {{ features[15] }}
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-name">
+                        Special Character Ratio
+                    </div>
+
+                    <div class="feature-value">
+                        {{ "%.4f"|format(features[16]) }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             DISCLAIMER
+        ================================================== -->
+
+        <div class="disclaimer">
+
+
+            <strong>
+                Security Notice:
+            </strong>
+
+
+            This prediction is generated by a machine-learning model.
+            A legitimate result does not guarantee that a website is completely
+            safe, and a phishing result does not by itself prove malicious activity.
+            Always verify the website domain and avoid entering sensitive
+            information on suspicious websites.
+
+
+        </div>
+
+
+    </section>
+
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+
+        <div class="developer">
+
+            Developed by
+
+            <strong>
+                Joar Cristobal
+            </strong>
+
+        </div>
+
+
+        <div class="copyright">
+
+            PhishGuard |
+
+            <span>
+                Phishing Website Detection System
+            </span>
+
+            © 2026
+
+        </div>
+
+
+    </footer>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

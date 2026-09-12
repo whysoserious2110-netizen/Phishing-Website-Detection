@@ -1,0 +1,129 @@
+  GNU nano 9.2                                                                                        .gitignore
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               # ================================
+# Python virtual environment
+# ================================
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ================================
+# Machine learning / library files
+# ================================
+catboost_info/
+
+# ================================
+# Raw / large datasets
+# ================================
+PhiUSIIL_Phishing_URL_Dataset.csv
+majestic_million.csv
+phishtank_online_valid.csv
+tranco_top_1m.csv.zip
+tranco_data/
+
+# External raw collections
+external_phishing_urls.csv
+legitimate_external_urls.csv
+
+# ================================
+# Training datasets / backups
+# ================================
+mixed_training_data.csv
+mixed_training_data_backup.csv
+mixed_training_data_v2.csv
+mixed_training_data_v2_backup.csv
+mixed_training_data_v3.csv
+mixed_training_data_v4.csv
+
+# ================================
+# Candidate / generated datasets
+# ================================
+legitimate_path_candidates_v4.csv
+verified_legitimate_paths_v4.csv
+verified_legitimate_paths_v4_clean.csv
+verified_legitimate_login_v4_clean.csv
+verified_majestic_candidates.csv
+majestic_external_candidates.csv
+balanced_external_test.csv
+
+# ================================
+# Temporary / experimental outputs
+# ================================
+v3_verified_legitimate_results.csv
+v3_verified_legitimate_results_corrected.csv
+v4_verified_legitimate_results.csv
+v3_v4_independent_auth_results.csv
+final_independent_test_set.csv
+final_clean_balanced_test_set.csv
+final_phishtank_stress_test.csv
+
+# ================================
+# Large / unnecessary archives
+# ================================
+*.zip
+*.7z
+*.rar
+
+# ================================
+# Local environment / editor
+# ================================
+.vscode/
+.idea/
+*.log
