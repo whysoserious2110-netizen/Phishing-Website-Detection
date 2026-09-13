@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -19,133 +20,361 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
+        :root {
+            /* ENHANCED PREMIUM PALETTE */
+            --bg-deep: #060913;
+            --bg-base: #0a0f1e;
+            --panel: #0f172a;
+            --panel-2: #1a2338;
+            --panel-3: #232f47;
 
-            background:
-                radial-gradient(
-                    circle at 10% 10%,
-                    rgba(0, 212, 255, 0.14),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 90% 20%,
-                    rgba(99, 102, 241, 0.13),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 50% 100%,
-                    rgba(14, 165, 233, 0.08),
-                    transparent 35%
-                ),
-                #050816;
+            --text: #f1f5f9;
+            --text-soft: #cbd5e1;
+            --muted: #94a3b8;
+            --muted-dark: #64748b;
 
-            color: #eaf2ff;
+            --cyan: #22d3ee;
+            --cyan-glow: #06b6d4;
+            --blue: #60a5fa;
+            --indigo: #818cf8;
+            --violet: #a78bfa;
 
-            min-height: 100vh;
+            --green: #34d399;
+            --red: #fb7185;
+            --yellow: #fbbf24;
+
+            --border: rgba(148, 163, 184, 0.12);
+            --border-bright: rgba(34, 211, 238, 0.35);
         }
 
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            background: var(--bg-deep);
+
+            /* Multi-layered radial gradient for ambient glow */
+            background-image:
+                radial-gradient(
+                    ellipse 80% 50% at 50% -20%,
+                    rgba(34, 211, 238, 0.15),
+                    transparent
+                ),
+                radial-gradient(
+                    ellipse 60% 50% at 80% 100%,
+                    rgba(139, 92, 246, 0.10),
+                    transparent
+                ),
+                radial-gradient(
+                    ellipse 50% 40% at 10% 30%,
+                    rgba(96, 165, 250, 0.08),
+                    transparent
+                );
+
+            background-attachment: fixed;
+
+            color: var(--text);
+
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            overflow-x: hidden;
+        }
+
+
         .container {
-            width: 92%;
-            max-width: 1200px;
-            margin: auto;
+            width: min(94%, 1180px);
+
+            margin: 0 auto;
         }
 
 
         /* =====================================================
-           TOP BAR
+           HEADER
         ====================================================== */
 
         .topbar {
+            min-height: 88px;
+
             display: flex;
-            justify-content: space-between;
+
             align-items: center;
 
-            padding: 24px 0;
+            justify-content: space-between;
 
-            border-bottom:
-                1px solid rgba(148, 163, 184, 0.10);
+            gap: 25px;
+
+            border-bottom: 1px solid var(--border);
+
+            position: relative;
+        }
+
+        .topbar::after {
+            content: "";
+
+            position: absolute;
+
+            bottom: -1px;
+            left: 0;
+
+            width: 100%;
+            height: 1px;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(34, 211, 238, 0.4),
+                transparent
+            );
         }
 
 
         .brand {
             display: flex;
+
             align-items: center;
-            gap: 13px;
+
+            gap: 14px;
+
+            flex-shrink: 0;
         }
 
 
+        /* ===== LOGO BADGE ===== */
         .brand-icon {
-            width: 44px;
-            height: 44px;
-
-            border-radius: 13px;
+            width: 60px;
+            height: 60px;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #06b6d4,
-                    #2563eb,
-                    #6366f1
-                );
+            border-radius: 16px;
 
-            color: white;
-
-            font-size: 22px;
+            background: linear-gradient(
+                145deg,
+                #0891b2 0%,
+                #2563eb 50%,
+                #7c3aed 100%
+            );
 
             box-shadow:
-                0 0 25px rgba(6, 182, 212, 0.25);
+                0 0 24px rgba(34, 211, 238, 0.35),
+                0 0 60px rgba(34, 211, 238, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+            flex-shrink: 0;
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        .brand-icon::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.15),
+                transparent 50%
+            );
+
+            pointer-events: none;
+        }
+
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
 
-        .brand-text h1 {
-            font-size: 19px;
-            color: #ffffff;
+        .brand-name {
+            color: var(--text);
 
-            margin-bottom: 3px;
+            font-size: 21px;
 
-            letter-spacing: 0.3px;
+            font-weight: 800;
+
+            letter-spacing: -0.2px;
+
+            background: linear-gradient(
+                135deg,
+                #ffffff 0%,
+                #cbd5e1 100%
+            );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
         }
 
 
-        .brand-text p {
+        .brand-subtitle {
+            margin-top: 3px;
+
+            color: var(--muted-dark);
+
             font-size: 10px;
 
-            color: #718096;
+            letter-spacing: 2px;
 
             text-transform: uppercase;
 
-            letter-spacing: 2px;
+            font-weight: 600;
         }
 
 
-        .system-status {
+        /* =====================================================
+           NAVIGATION
+        ====================================================== */
+
+        .nav-area {
             display: flex;
+
             align-items: center;
-            gap: 9px;
 
-            padding:
-                8px 13px;
+            gap: 5px;
+        }
 
-            border-radius: 999px;
 
-            background:
-                rgba(34, 197, 94, 0.07);
+        .nav-button {
+            border: none;
 
-            border:
-                1px solid rgba(34, 197, 94, 0.14);
+            background: transparent;
 
-            color: #86efac;
+            color: var(--muted);
+
+            padding: 10px 14px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
 
             font-size: 11px;
 
-            text-transform: uppercase;
+            font-weight: 750;
 
             letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            transition: all 0.25s ease;
+
+            position: relative;
+        }
+
+
+        .nav-button:hover {
+            background: rgba(34, 211, 238, 0.08);
+
+            color: var(--text);
+
+            text-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+        }
+
+
+        .nav-button.active {
+            color: #67e8f9;
+
+            background: linear-gradient(
+                135deg,
+                rgba(34, 211, 238, 0.12),
+                rgba(99, 102, 241, 0.08)
+            );
+
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                0 0 20px rgba(34, 211, 238, 0.15);
+
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+
+
+        /* ===== SYSTEM STATUS WITH SHIMMER ===== */
+        .system-status {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 9px 13px;
+
+            border-radius: 999px;
+
+            border: 1px solid rgba(52, 211, 153, 0.35);
+
+            background: linear-gradient(
+                135deg,
+                rgba(52, 211, 153, 0.12),
+                rgba(34, 197, 94, 0.05)
+            );
+
+            color: #6ee7b7;
+
+            font-size: 10px;
+
+            font-weight: 750;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            white-space: nowrap;
+
+            box-shadow:
+                0 0 20px rgba(52, 211, 153, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .system-status::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -100%;
+
+            width: 100%;
+            height: 100%;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(52, 211, 153, 0.15),
+                transparent
+            );
+
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
 
@@ -155,10 +384,30 @@
 
             border-radius: 50%;
 
-            background: #22c55e;
+            background: #34d399;
 
             box-shadow:
-                0 0 12px rgba(34, 197, 94, 0.9);
+                0 0 12px rgba(52, 211, 153, 1),
+                0 0 24px rgba(52, 211, 153, 0.5);
+
+            animation: pulse 2s infinite;
+
+            flex-shrink: 0;
+        }
+
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.85);
+            }
         }
 
 
@@ -169,9 +418,9 @@
         .hero {
             text-align: center;
 
-            padding:
-                75px 20px
-                48px;
+            padding: 78px 20px 58px;
+
+            position: relative;
         }
 
 
@@ -180,106 +429,270 @@
 
             align-items: center;
 
-            padding:
-                8px 16px;
+            gap: 9px;
+
+            padding: 9px 16px;
 
             border-radius: 999px;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(6, 182, 212, 0.10),
-                    rgba(99, 102, 241, 0.10)
-                );
+            border: 1px solid rgba(34, 211, 238, 0.3);
 
-            border:
-                1px solid rgba(96, 165, 250, 0.18);
+            background: linear-gradient(
+                135deg,
+                rgba(34, 211, 238, 0.1),
+                rgba(99, 102, 241, 0.05)
+            );
 
             color: #67e8f9;
 
-            font-size: 10px;
+            font-size: 11px;
 
-            font-weight: bold;
+            font-weight: 800;
 
-            letter-spacing: 1.7px;
+            letter-spacing: 1.8px;
 
             text-transform: uppercase;
 
-            margin-bottom: 20px;
+            box-shadow:
+                0 0 30px rgba(34, 211, 238, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
 
-        .hero h2 {
-            font-size:
-                clamp(35px, 5vw, 60px);
+        .hero-badge::before {
+            content: "";
 
-            line-height: 1.08;
+            width: 7px;
+            height: 7px;
 
-            max-width: 900px;
+            border-radius: 50%;
 
-            margin: auto;
+            background: var(--cyan);
 
-            color: #f8fbff;
+            box-shadow:
+                0 0 12px rgba(34, 211, 238, 1),
+                0 0 24px rgba(34, 211, 238, 0.5);
 
-            letter-spacing: -1.5px;
+            animation: pulse 2s infinite;
         }
 
 
-        .hero h2 span {
-            background:
-                linear-gradient(
-                    90deg,
-                    #22d3ee,
-                    #60a5fa,
-                    #818cf8
-                );
+        .hero h1 {
+            max-width: 940px;
+
+            margin: 23px auto 0;
+
+            color: var(--text);
+
+            font-size: clamp(43px, 6vw, 72px);
+
+            line-height: 1.05;
+
+            letter-spacing: -2.5px;
+
+            font-weight: 800;
+        }
+
+
+        /* ANIMATED GRADIENT TEXT */
+        .hero h1 span {
+            background: linear-gradient(
+                90deg,
+                #22d3ee 0%,
+                #60a5fa 25%,
+                #a78bfa 50%,
+                #60a5fa 75%,
+                #22d3ee 100%
+            );
+
+            background-size: 200% auto;
 
             -webkit-background-clip: text;
 
+            background-clip: text;
+
             -webkit-text-fill-color: transparent;
+
+            animation: gradientShift 6s ease infinite;
+
+            filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.3));
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
         }
 
 
-        .hero p {
-            max-width: 720px;
+        .hero-description {
+            max-width: 760px;
 
-            margin:
-                22px auto 0;
+            margin: 24px auto 0;
 
-            color: #8996ad;
+            color: var(--text-soft);
 
-            font-size: 15px;
+            font-size: 16px;
 
-            line-height: 1.8;
+            line-height: 1.85;
         }
 
 
         /* =====================================================
-           ANALYZER CARD
+           MODEL INFORMATION
+        ====================================================== */
+
+        .model-strip {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .model-card {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 17px 18px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 17px;
+
+            background: linear-gradient(
+                145deg,
+                rgba(15, 23, 42, 0.9),
+                rgba(10, 15, 30, 0.9)
+            );
+
+            backdrop-filter: blur(10px);
+
+            transition: all 0.3s ease;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .model-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 1px;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(34, 211, 238, 0.3),
+                transparent
+            );
+        }
+
+        .model-card:hover {
+            border-color: rgba(34, 211, 238, 0.3);
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.1);
+        }
+
+
+        .model-symbol {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 11px;
+
+            background: linear-gradient(
+                135deg,
+                rgba(34, 211, 238, 0.15),
+                rgba(99, 102, 241, 0.1)
+            );
+
+            border: 1px solid rgba(34, 211, 238, 0.25);
+
+            color: #67e8f9;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+
+        .model-card strong {
+            display: block;
+
+            color: var(--text);
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+
+            font-weight: 700;
+        }
+
+
+        .model-card span {
+            color: var(--muted);
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           ANALYZER
         ====================================================== */
 
         .analyzer-card {
             position: relative;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(15, 23, 42, 0.94),
-                    rgba(8, 15, 32, 0.94)
-                );
-
-            border:
-                1px solid rgba(71, 182, 255, 0.12);
-
-            border-radius: 24px;
-
             padding: 30px;
 
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.40),
-                0 0 50px rgba(37, 99, 235, 0.05);
-
             overflow: hidden;
+
+            border: 1px solid rgba(34, 211, 238, 0.18);
+
+            border-radius: 25px;
+
+            background: linear-gradient(
+                145deg,
+                rgba(15, 23, 42, 0.95),
+                rgba(10, 15, 30, 0.95)
+            );
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(34, 211, 238, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+            backdrop-filter: blur(20px);
         }
 
 
@@ -292,362 +705,669 @@
             left: 0;
 
             width: 100%;
-            height: 2px;
+            height: 3px;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    #06b6d4,
-                    #6366f1,
-                    transparent
-                );
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #22d3ee,
+                #6366f1,
+                #a78bfa,
+                transparent
+            );
 
-            opacity: 0.8;
+            background-size: 200% auto;
+
+            animation: gradientShift 4s linear infinite;
         }
 
 
-        .section-title {
+        .analyzer-heading {
             display: flex;
 
             justify-content: space-between;
-            align-items: center;
 
-            margin-bottom: 19px;
+            align-items: flex-end;
+
+            gap: 18px;
+
+            margin-bottom: 21px;
         }
 
 
-        .section-title h3 {
-            font-size: 15px;
+        .eyebrow {
+            color: #67e8f9;
 
-            color: #f1f5f9;
+            font-size: 11px;
 
-            letter-spacing: 0.2px;
-        }
+            font-weight: 800;
 
-
-        .section-title span {
-            font-size: 10px;
-
-            color: #64748b;
+            letter-spacing: 1.8px;
 
             text-transform: uppercase;
 
-            letter-spacing: 1.3px;
+            margin-bottom: 7px;
+
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
         }
 
 
-        /* =====================================================
-           INPUT
-        ====================================================== */
+        .analyzer-heading h2 {
+            color: var(--text);
 
-        .input-group {
+            font-size: 21px;
+
+            font-weight: 700;
+        }
+
+
+        .analyzer-heading p {
+            color: var(--muted);
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            font-weight: 600;
+        }
+
+
+        .input-row {
             display: flex;
 
             gap: 12px;
         }
 
 
-        .input-group input {
+        .input-wrapper {
+            position: relative;
+
             flex: 1;
+        }
 
-            height: 58px;
 
-            border-radius: 15px;
+        .input-wrapper::before {
+            content: "↗";
 
-            border:
-                1px solid rgba(100, 116, 139, 0.20);
+            position: absolute;
 
-            background:
-                rgba(2, 6, 23, 0.80);
+            left: 17px;
+            top: 50%;
 
-            color: #f8fafc;
+            transform: translateY(-50%);
 
-            padding:
-                0 19px;
+            color: var(--muted);
+
+            font-size: 17px;
+
+            z-index: 2;
+        }
+
+
+        .url-input {
+            width: 100%;
+
+            height: 62px;
+
+            padding: 0 20px 0 46px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            background: rgba(6, 9, 19, 0.8);
+
+            color: var(--text);
 
             outline: none;
 
-            font-size: 14px;
+            font-size: 15px;
 
-            transition:
-                border 0.2s ease,
-                box-shadow 0.2s ease;
+            transition: all 0.3s ease;
         }
 
 
-        .input-group input::placeholder {
-            color: #475569;
+        .url-input::placeholder {
+            color: var(--muted-dark);
         }
 
 
-        .input-group input:focus {
-            border-color:
-                rgba(34, 211, 238, 0.55);
+        .url-input:focus {
+            border-color: rgba(34, 211, 238, 0.6);
 
             box-shadow:
-                0 0 0 4px
-                rgba(6, 182, 212, 0.08),
-                0 0 25px
-                rgba(6, 182, 212, 0.05);
+                0 0 0 4px rgba(34, 211, 238, 0.1),
+                0 0 30px rgba(34, 211, 238, 0.15);
+
+            background: rgba(6, 9, 19, 1);
         }
 
 
-        /* =====================================================
-           ANALYZE BUTTON
-        ====================================================== */
-
+        /* ===== PREMIUM BUTTON ===== */
         .analyze-btn {
-            height: 58px;
+            min-width: 175px;
 
-            padding:
-                0 28px;
+            height: 62px;
 
             border: none;
 
-            border-radius: 15px;
+            border-radius: 16px;
+
+            background: linear-gradient(
+                135deg,
+                #0891b2 0%,
+                #2563eb 50%,
+                #7c3aed 100%
+            );
+
+            background-size: 200% 200%;
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 850;
+
+            letter-spacing: 1.1px;
 
             cursor: pointer;
 
-            color: #ffffff;
+            box-shadow:
+                0 12px 30px rgba(37, 99, 235, 0.35),
+                0 0 40px rgba(34, 211, 238, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
-            font-size: 12px;
+            transition: all 0.3s ease;
 
-            font-weight: bold;
+            position: relative;
 
-            letter-spacing: 1px;
+            overflow: hidden;
+        }
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #0891b2,
-                    #2563eb,
-                    #4f46e5
-                );
+        .analyze-btn::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -100%;
+
+            width: 100%;
+            height: 100%;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.25),
+                transparent
+            );
+
+            transition: left 0.5s ease;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+
+            background-position: 100% 50%;
 
             box-shadow:
-                0 10px 30px
-                rgba(37, 99, 235, 0.25);
+                0 18px 42px rgba(37, 99, 235, 0.45),
+                0 0 60px rgba(34, 211, 238, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
 
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
+        .analyze-btn:hover::before {
+            left: 100%;
         }
 
 
-        .analyze-btn:hover {
-            transform:
-                translateY(-2px);
+        .analyze-btn:disabled {
+            transform: none;
 
-            box-shadow:
-                0 15px 40px
-                rgba(37, 99, 235, 0.40);
+            cursor: wait;
+
+            opacity: 0.72;
+        }
+
+
+        .input-note {
+            margin-top: 14px;
+
+            color: var(--muted);
+
+            font-size: 11px;
         }
 
 
         /* =====================================================
-           RESULT CARD
+           RESULT
         ====================================================== */
 
         .result-card {
-            margin-top: 24px;
+            position: relative;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(15, 23, 42, 0.94),
-                    rgba(8, 15, 32, 0.94)
-                );
-
-            border-radius: 24px;
+            margin-top: 20px;
 
             padding: 30px;
 
+            border-radius: 25px;
+
+            background: linear-gradient(
+                145deg,
+                rgba(15, 23, 42, 0.95),
+                rgba(10, 15, 30, 0.95)
+            );
+
+            backdrop-filter: blur(20px);
+
+            animation: result-in 0.45s ease;
+        }
+
+
+        @keyframes result-in {
+
+            from {
+                opacity: 0;
+
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+        }
+
+
+        .result-card.phishing {
+            border: 1px solid rgba(248, 113, 113, 0.35);
+
             box-shadow:
-                0 25px 80px
-                rgba(0, 0, 0, 0.35);
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(248, 113, 113, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
 
 
-        .result-header {
-            display: flex;
+        .result-card.legitimate {
+            border: 1px solid rgba(52, 211, 153, 0.35);
 
-            justify-content: space-between;
-            align-items: center;
-
-            gap: 18px;
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(52, 211, 153, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
 
 
-        .result-main {
-            display: flex;
+        .result-layout {
+            display: grid;
+
+            grid-template-columns: minmax(0, 1fr) 230px;
+
+            gap: 35px;
 
             align-items: center;
-
-            gap: 17px;
         }
 
 
-        .result-icon {
-            width: 60px;
-            height: 60px;
-
-            border-radius: 17px;
-
-            display: flex;
+        .result-status {
+            display: inline-flex;
 
             align-items: center;
-            justify-content: center;
 
-            font-size: 28px;
+            gap: 9px;
 
-            font-weight: bold;
+            padding: 8px 12px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+
+            font-weight: 850;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 15px;
+        }
+
+
+        .result-card.phishing .result-status {
+            color: #fb7185;
+
+            border: 1px solid rgba(248, 113, 113, 0.35);
+
+            background: rgba(248, 113, 113, 0.1);
+
+            box-shadow: 0 0 20px rgba(248, 113, 113, 0.15);
+        }
+
+
+        .result-card.legitimate .result-status {
+            color: #6ee7b7;
+
+            border: 1px solid rgba(52, 211, 153, 0.35);
+
+            background: rgba(52, 211, 153, 0.1);
+
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.15);
+        }
+
+
+        .result-status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+        }
+
+
+        .result-card.phishing .result-status-dot {
+            background: #fb7185;
+
+            box-shadow: 0 0 10px rgba(251, 113, 133, 1);
+        }
+
+
+        .result-card.legitimate .result-status-dot {
+            background: #34d399;
+
+            box-shadow: 0 0 10px rgba(52, 211, 153, 1);
         }
 
 
         .result-title {
-            font-size: 23px;
+            color: var(--text);
 
-            color: #f8fafc;
+            font-size: clamp(27px, 4vw, 40px);
 
-            margin-bottom: 6px;
+            line-height: 1.08;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 10px;
+
+            font-weight: 800;
         }
 
 
         .result-url {
+            color: var(--muted);
+
+            max-width: 800px;
+
+            font-family:
+                ui-monospace,
+                SFMono-Regular,
+                Menlo,
+                Monaco,
+                Consolas,
+                monospace;
+
             font-size: 12px;
 
-            color: #64748b;
+            line-height: 1.75;
 
             word-break: break-all;
         }
 
 
         /* =====================================================
-           MODEL PROBABILITY
+           SCORE RING
         ====================================================== */
 
-        .confidence {
-            text-align: right;
+        .score-area {
+            display: flex;
+
+            align-items: center;
+
+            flex-direction: column;
         }
 
 
-        .confidence-label {
+        .score-ring {
+            --score: 0%;
+
+            position: relative;
+
+            width: 172px;
+            height: 172px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: conic-gradient(
+                #fb7185 0%,
+                #fb7185 var(--score),
+                #1a2338 var(--score),
+                #1a2338 100%
+            );
+
+            filter: drop-shadow(0 0 30px rgba(251, 113, 133, 0.3));
+        }
+
+
+        .result-card.legitimate .score-ring {
+            background: conic-gradient(
+                #34d399 0%,
+                #34d399 var(--score),
+                #1a2338 var(--score),
+                #1a2338 100%
+            );
+
+            filter: drop-shadow(0 0 30px rgba(52, 211, 153, 0.3));
+        }
+
+
+        .score-ring::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 10px;
+
+            border-radius: 50%;
+
+            background: var(--bg-deep);
+
+            border: 1px solid var(--border);
+
+            box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+
+        .score-content {
+            position: relative;
+
+            z-index: 2;
+
+            text-align: center;
+        }
+
+
+        .score-number {
+            color: var(--text);
+
+            font-size: 31px;
+
+            font-weight: 850;
+
+            letter-spacing: -1px;
+        }
+
+
+        .score-label {
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            font-weight: 750;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.2px;
+        }
+
+
+        .score-caption {
+            margin-top: 12px;
+
+            color: var(--muted-dark);
+
             font-size: 10px;
 
             text-transform: uppercase;
 
-            color: #64748b;
-
-            letter-spacing: 1.4px;
-        }
-
-
-        .confidence-value {
-            font-size: 28px;
-
-            font-weight: bold;
-
-            margin-top: 3px;
+            letter-spacing: 1px;
         }
 
 
         /* =====================================================
-           PHISHING
+           DETAIL PANELS
         ====================================================== */
 
-        .result-card.phishing {
-            border:
-                1px solid rgba(248, 113, 113, 0.20);
+        .detail-grid {
+            display: grid;
 
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.35),
-                0 0 35px rgba(239, 68, 68, 0.04);
+            grid-template-columns: 1fr 1fr;
+
+            gap: 14px;
+
+            margin-top: 26px;
         }
 
 
-        .result-card.phishing .result-icon {
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(239, 68, 68, 0.18),
-                    rgba(249, 115, 22, 0.12)
-                );
+        .detail-panel {
+            min-height: 120px;
 
-            border:
-                1px solid rgba(248, 113, 113, 0.15);
+            padding: 20px;
 
-            color: #fb7185;
-
-            box-shadow:
-                0 0 25px
-                rgba(239, 68, 68, 0.10);
-        }
-
-
-        .result-card.phishing .confidence-value {
-            color: #fb7185;
-        }
-
-
-        /* =====================================================
-           LEGITIMATE
-        ====================================================== */
-
-        .result-card.legitimate {
-            border:
-                1px solid rgba(45, 212, 191, 0.20);
-
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.35),
-                0 0 35px rgba(20, 184, 166, 0.04);
-        }
-
-
-        .result-card.legitimate .result-icon {
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(34, 197, 94, 0.16),
-                    rgba(20, 184, 166, 0.12)
-                );
-
-            border:
-                1px solid rgba(45, 212, 191, 0.15);
-
-            color: #4ade80;
-
-            box-shadow:
-                0 0 25px
-                rgba(34, 197, 94, 0.08);
-        }
-
-
-        .result-card.legitimate .confidence-value {
-            color: #4ade80;
-        }
-
-
-        /* =====================================================
-           RISK ASSESSMENT
-        ====================================================== */
-
-        .risk-assessment {
-            margin-top: 25px;
-
-            padding: 21px;
+            border: 1px solid var(--border);
 
             border-radius: 17px;
 
-            background:
-                rgba(2, 6, 23, 0.48);
+            background: linear-gradient(
+                145deg,
+                rgba(6, 9, 19, 0.7),
+                rgba(10, 15, 30, 0.7)
+            );
 
-            border:
-                1px solid rgba(100, 116, 139, 0.14);
+            transition: border-color 0.3s ease;
+        }
+
+        .detail-panel:hover {
+            border-color: rgba(34, 211, 238, 0.25);
         }
 
 
-        .risk-header {
+        .panel-heading {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .panel-heading h3 {
+            color: var(--text);
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .panel-heading span {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.9px;
+        }
+
+
+        .risk-badge {
+            padding: 8px 12px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+
+            font-weight: 850;
+
+            letter-spacing: 0.9px;
+
+            text-transform: uppercase;
+        }
+
+
+        .risk-high {
+            color: #fb7185;
+
+            background: rgba(248, 113, 113, 0.15);
+
+            border: 1px solid rgba(248, 113, 113, 0.35);
+
+            box-shadow: 0 0 15px rgba(248, 113, 113, 0.15);
+        }
+
+
+        .risk-suspicious {
+            color: #fbbf24;
+
+            background: rgba(251, 191, 36, 0.12);
+
+            border: 1px solid rgba(251, 191, 36, 0.35);
+
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
+        }
+
+
+        .risk-low {
+            color: #6ee7b7;
+
+            background: rgba(52, 211, 153, 0.12);
+
+            border: 1px solid rgba(52, 211, 153, 0.35);
+
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.15);
+        }
+
+
+        .panel-text {
+            color: var(--text-soft);
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           PROBABILITIES
+        ====================================================== */
+
+        .analysis-title {
             display: flex;
 
             justify-content: space-between;
@@ -656,308 +1376,233 @@
 
             gap: 15px;
 
-            margin-bottom: 12px;
+            margin-top: 30px;
+
+            margin-bottom: 14px;
         }
 
 
-        .risk-title {
-            color: #f1f5f9;
+        .analysis-title h3 {
+            color: var(--text);
 
-            font-size: 13px;
+            font-size: 17px;
 
-            font-weight: bold;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1px;
+            font-weight: 700;
         }
 
 
-        .risk-badge {
-            padding:
-                7px 12px;
+        .analysis-title span {
+            color: var(--muted);
 
-            border-radius: 999px;
-
-            font-size: 10px;
-
-            font-weight: bold;
+            font-size: 9px;
 
             letter-spacing: 1px;
 
             text-transform: uppercase;
+
+            font-weight: 600;
         }
 
 
-        .risk-high {
-            background:
-                rgba(239, 68, 68, 0.12);
-
-            border:
-                1px solid rgba(239, 68, 68, 0.22);
-
-            color: #fb7185;
-        }
-
-
-        .risk-suspicious {
-            background:
-                rgba(245, 158, 11, 0.12);
-
-            border:
-                1px solid rgba(245, 158, 11, 0.22);
-
-            color: #fbbf24;
-        }
-
-
-        .risk-low {
-            background:
-                rgba(34, 197, 94, 0.10);
-
-            border:
-                1px solid rgba(34, 197, 94, 0.20);
-
-            color: #4ade80;
-        }
-
-
-        .risk-reason {
-            color: #9aa9bd;
-
-            font-size: 12px;
-
-            line-height: 1.7;
-        }
-
-
-        /* =====================================================
-           EXPLANATION
-        ====================================================== */
-
-        .explanation {
-            margin-top: 25px;
-
-            padding:
-                19px 21px;
-
-            border-radius: 15px;
-
-            background:
-                rgba(2, 6, 23, 0.48);
-
-            border:
-                1px solid rgba(100, 116, 139, 0.14);
-
-            color: #aebbd0;
-
-            font-size: 13px;
-
-            line-height: 1.8;
-        }
-
-
-        .explanation-title {
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            color: #f1f5f9;
-
-            font-weight: bold;
-
-            font-size: 13px;
-
-            margin-bottom: 8px;
-        }
-
-
-        /* =====================================================
-           PROBABILITIES
-        ====================================================== */
-
-        .probability-section {
-            margin-top: 29px;
-        }
-
-
-        .probability-grid {
+        .probabilities {
             display: grid;
 
-            grid-template-columns:
-                1fr 1fr;
+            grid-template-columns: 1fr 1fr;
 
-            gap: 16px;
+            gap: 14px;
         }
 
 
         .probability-box {
             padding: 19px;
 
-            border-radius: 15px;
+            border: 1px solid var(--border);
 
-            background:
-                rgba(2, 6, 23, 0.48);
+            border-radius: 16px;
 
-            border:
-                1px solid rgba(100, 116, 139, 0.12);
+            background: linear-gradient(
+                145deg,
+                rgba(6, 9, 19, 0.7),
+                rgba(10, 15, 30, 0.7)
+            );
         }
 
 
-        .probability-top {
+        .probability-head {
             display: flex;
 
             justify-content: space-between;
+
+            align-items: center;
 
             margin-bottom: 11px;
         }
 
 
-        .probability-top span:first-child {
-            color: #8996ad;
+        .probability-head span:first-child {
+            color: var(--text-soft);
 
             font-size: 12px;
         }
 
 
-        .probability-value {
-            color: #e2e8f0;
+        .probability-number {
+            color: var(--text);
 
-            font-weight: bold;
+            font-size: 13px;
 
-            font-size: 12px;
+            font-weight: 800;
         }
 
 
         .progress {
-            height: 8px;
+            height: 9px;
+
+            overflow: hidden;
 
             border-radius: 999px;
 
-            background:
-                #172033;
+            background: var(--panel-2);
 
-            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
         }
 
 
         .progress-bar {
             height: 100%;
 
-            border-radius: 999px;
-
-            transition:
-                width 0.6s ease;
+            border-radius: inherit;
         }
 
 
         .phishing-bar {
-            background:
-                linear-gradient(
-                    90deg,
-                    #ef4444,
-                    #f97316
-                );
+            background: linear-gradient(
+                90deg,
+                #ef4444,
+                #fb7185,
+                #fda4af
+            );
 
-            box-shadow:
-                0 0 10px
-                rgba(239, 68, 68, 0.25);
+            box-shadow: 0 0 15px rgba(251, 113, 133, 0.5);
         }
 
 
         .legitimate-bar {
-            background:
-                linear-gradient(
-                    90deg,
-                    #10b981,
-                    #22d3ee
-                );
+            background: linear-gradient(
+                90deg,
+                #10b981,
+                #34d399,
+                #6ee7b7
+            );
 
-            box-shadow:
-                0 0 10px
-                rgba(34, 211, 238, 0.20);
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
         }
 
 
         /* =====================================================
-           FEATURES
+           FEATURE GROUPS
         ====================================================== */
 
-        .features-section {
-            margin-top: 30px;
-        }
-
-
-        .features-title {
-            font-size: 15px;
-
-            color: #f1f5f9;
-
-            margin-bottom: 15px;
-        }
-
-
-        .features-grid {
+        .feature-groups {
             display: grid;
 
-            grid-template-columns:
-                repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
 
-            gap: 11px;
+            gap: 13px;
         }
 
 
-        .feature-box {
-            padding: 16px;
+        .feature-group {
+            padding: 19px;
 
-            border-radius: 14px;
+            border: 1px solid var(--border);
 
-            background:
-                rgba(2, 6, 23, 0.45);
+            border-radius: 16px;
 
-            border:
-                1px solid rgba(100, 116, 139, 0.10);
+            background: linear-gradient(
+                145deg,
+                rgba(6, 9, 19, 0.7),
+                rgba(10, 15, 30, 0.7)
+            );
 
-            min-height: 84px;
+            transition: border-color 0.3s ease;
+        }
 
-            transition:
-                border 0.2s ease,
-                transform 0.2s ease;
+        .feature-group:hover {
+            border-color: rgba(34, 211, 238, 0.25);
         }
 
 
-        .feature-box:hover {
-            border-color:
-                rgba(34, 211, 238, 0.20);
+        .group-label {
+            display: flex;
 
-            transform:
-                translateY(-1px);
-        }
+            align-items: center;
 
+            gap: 8px;
 
-        .feature-name {
-            color: #64748b;
+            margin-bottom: 13px;
+
+            color: var(--text-soft);
 
             font-size: 10px;
 
-            line-height: 1.4;
-
-            margin-bottom: 8px;
+            font-weight: 850;
 
             text-transform: uppercase;
 
-            letter-spacing: 0.4px;
+            letter-spacing: 1.1px;
+        }
+
+
+        .group-label::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--cyan);
+
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.9);
+        }
+
+
+        .feature-item {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 18px;
+
+            padding: 9px 0;
+
+            border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+        }
+
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+
+        .feature-label {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.5;
         }
 
 
         .feature-value {
-            color: #dce8f8;
+            color: var(--text);
 
-            font-size: 16px;
+            font-size: 11px;
 
-            font-weight: bold;
+            font-weight: 800;
+
+            text-align: right;
 
             word-break: break-word;
         }
@@ -968,29 +1613,34 @@
         ====================================================== */
 
         .disclaimer {
-            margin-top: 24px;
+            margin-top: 17px;
 
-            padding:
-                15px 17px;
+            padding: 16px 18px;
 
-            border-radius: 13px;
+            border-radius: 15px;
 
-            background:
-                rgba(245, 158, 11, 0.045);
+            border: 1px solid rgba(251, 191, 36, 0.25);
 
-            border:
-                1px solid rgba(245, 158, 11, 0.12);
+            background: linear-gradient(
+                135deg,
+                rgba(251, 191, 36, 0.08),
+                rgba(245, 158, 11, 0.03)
+            );
 
-            color: #8290a5;
+            color: var(--text-soft);
 
             font-size: 11px;
 
-            line-height: 1.7;
+            line-height: 1.8;
+
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.05);
         }
 
 
         .disclaimer strong {
             color: #fbbf24;
+
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
         }
 
 
@@ -999,52 +1649,452 @@
         ====================================================== */
 
         footer {
+            margin-top: 70px;
+
+            padding: 32px 0 50px;
+
             text-align: center;
 
-            padding:
-                45px 0
-                55px;
+            border-top: 1px solid var(--border);
 
-            color: #475569;
+            position: relative;
+        }
 
-            font-size: 12px;
+        footer::before {
+            content: "";
+
+            position: absolute;
+
+            top: -1px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 200px;
+            height: 1px;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(34, 211, 238, 0.5),
+                transparent
+            );
         }
 
 
         .developer {
-            color: #8290a5;
+            color: var(--muted);
 
-            font-size: 13px;
+            font-size: 12px;
 
             margin-bottom: 8px;
         }
 
 
         .developer strong {
-            background:
-                linear-gradient(
-                    90deg,
-                    #22d3ee,
-                    #818cf8
-                );
+            color: var(--text);
 
-            -webkit-background-clip: text;
-
-            -webkit-text-fill-color: transparent;
-
-            font-weight: bold;
+            font-weight: 800;
         }
 
 
         .copyright {
-            color: #475569;
+            color: var(--muted-dark);
 
-            font-size: 11px;
+            font-size: 10px;
         }
 
 
-        .copyright span {
-            color: #64748b;
+        /* =====================================================
+           MODALS
+        ====================================================== */
+
+        .modal-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(6, 9, 19, 0.85);
+
+            backdrop-filter: blur(16px);
+
+            z-index: 9999;
+        }
+
+
+        .modal-overlay.active {
+            display: flex;
+
+            animation: fade-in 0.2s ease;
+        }
+
+
+        @keyframes fade-in {
+
+            from { opacity: 0; }
+            to { opacity: 1; }
+
+        }
+
+
+        .modal {
+            width: min(94%, 760px);
+
+            max-height: 88vh;
+
+            overflow-y: auto;
+
+            border: 1px solid rgba(34, 211, 238, 0.25);
+
+            border-radius: 24px;
+
+            background: linear-gradient(
+                145deg,
+                rgba(15, 23, 42, 0.98),
+                rgba(10, 15, 30, 0.98)
+            );
+
+            box-shadow:
+                0 30px 100px rgba(0, 0, 0, 0.8),
+                0 0 80px rgba(34, 211, 238, 0.15);
+
+            animation: modal-up 0.25s ease;
+        }
+
+
+        @keyframes modal-up {
+
+            from {
+                opacity: 0;
+                transform: translateY(14px) scale(0.985);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+
+        .modal-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 22px 24px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .modal-title {
+            color: var(--text);
+
+            font-size: 23px;
+
+            font-weight: 800;
+
+            background: linear-gradient(
+                135deg,
+                #ffffff,
+                #cbd5e1
+            );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .close-modal {
+            width: 38px;
+            height: 38px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            color: var(--muted);
+
+            cursor: pointer;
+
+            font-size: 22px;
+
+            transition: all 0.2s ease;
+        }
+
+
+        .close-modal:hover {
+            background: rgba(248, 113, 113, 0.15);
+
+            color: white;
+
+            box-shadow: 0 0 20px rgba(248, 113, 113, 0.2);
+        }
+
+
+        .modal-body {
+            padding: 25px;
+        }
+
+
+        .modal-intro {
+            color: var(--text-soft);
+
+            font-size: 13px;
+
+            line-height: 1.85;
+
+            margin-bottom: 22px;
+        }
+
+
+        .modal-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 13px;
+        }
+
+
+        .modal-info {
+            padding: 17px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            background: linear-gradient(
+                145deg,
+                rgba(6, 9, 19, 0.7),
+                rgba(10, 15, 30, 0.7)
+            );
+
+            transition: border-color 0.3s ease;
+        }
+
+        .modal-info:hover {
+            border-color: rgba(34, 211, 238, 0.25);
+        }
+
+
+        .modal-info-label {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            font-weight: 750;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .modal-info-value {
+            color: var(--text);
+
+            font-size: 12px;
+
+            line-height: 1.65;
+
+            font-weight: 650;
+        }
+
+
+        /* =====================================================
+           PIPELINE
+        ====================================================== */
+
+        .pipeline {
+            display: grid;
+
+            gap: 12px;
+        }
+
+
+        .pipeline-step {
+            display: grid;
+
+            grid-template-columns: 48px 1fr;
+
+            gap: 15px;
+
+            padding: 17px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            background: linear-gradient(
+                145deg,
+                rgba(6, 9, 19, 0.7),
+                rgba(10, 15, 30, 0.7)
+            );
+
+            transition: all 0.3s ease;
+        }
+
+        .pipeline-step:hover {
+            border-color: rgba(34, 211, 238, 0.25);
+
+            transform: translateX(4px);
+        }
+
+
+        .pipeline-number {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: linear-gradient(
+                135deg,
+                rgba(34, 211, 238, 0.15),
+                rgba(99, 102, 241, 0.1)
+            );
+
+            border: 1px solid rgba(34, 211, 238, 0.25);
+
+            color: #67e8f9;
+
+            font-size: 11px;
+
+            font-weight: 850;
+        }
+
+
+        .pipeline-step h3 {
+            color: var(--text);
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .pipeline-step p {
+            color: var(--text-soft);
+
+            font-size: 11px;
+
+            line-height: 1.75;
+        }
+
+
+        /* =====================================================
+           METRICS
+        ====================================================== */
+
+        .metric-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 13px;
+        }
+
+
+        .metric-card {
+            padding: 20px;
+
+            text-align: center;
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            background: linear-gradient(
+                145deg,
+                rgba(6, 9, 19, 0.7),
+                rgba(10, 15, 30, 0.7)
+            );
+
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(34, 211, 238, 0.3);
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.1);
+        }
+
+
+        .metric-value {
+            color: #67e8f9;
+
+            font-size: 30px;
+
+            font-weight: 850;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 6px;
+
+            text-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
+        }
+
+
+        .metric-name {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            font-weight: 750;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.1px;
+        }
+
+
+        .model-note {
+            margin-top: 18px;
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            border: 1px solid rgba(34, 211, 238, 0.18);
+
+            background: linear-gradient(
+                135deg,
+                rgba(34, 211, 238, 0.06),
+                rgba(99, 102, 241, 0.03)
+            );
+
+            color: var(--text-soft);
+
+            font-size: 11px;
+
+            line-height: 1.75;
         }
 
 
@@ -1052,11 +2102,51 @@
            RESPONSIVE
         ====================================================== */
 
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
 
-            .features-grid {
-                grid-template-columns:
-                    repeat(2, 1fr);
+            .feature-groups {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 820px) {
+
+            .topbar {
+                min-height: auto;
+                padding: 16px 0;
+                flex-wrap: wrap;
+            }
+
+
+            .nav-area {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                padding-top: 8px;
+                border-top: 1px solid var(--border);
+            }
+
+
+            .system-status {
+                margin-left: auto;
+            }
+
+
+            .model-strip {
+                grid-template-columns: 1fr;
+            }
+
+
+            .result-layout {
+                grid-template-columns: 1fr;
+            }
+
+
+            .score-area {
+                align-items: flex-start;
+                order: -1;
             }
 
         }
@@ -1064,66 +2154,19 @@
 
         @media (max-width: 700px) {
 
-            .topbar {
-                align-items: flex-start;
-
-                gap: 15px;
-
-                flex-direction: column;
-            }
-
-
-            .system-status {
-                align-self: flex-end;
-            }
-
-
             .hero {
-                padding-top: 48px;
+                padding: 53px 12px 40px;
             }
 
 
-            .input-group {
-                flex-direction: column;
+            .hero h1 {
+                font-size: 42px;
+                letter-spacing: -1.5px;
             }
 
 
-            .analyze-btn {
-                width: 100%;
-            }
-
-
-            .result-header {
-                flex-direction: column;
-
-                align-items: flex-start;
-            }
-
-
-            .confidence {
-                text-align: left;
-            }
-
-
-            .risk-header {
-                align-items: flex-start;
-
-                flex-direction: column;
-            }
-
-
-            .probability-grid {
-                grid-template-columns:
-                    1fr;
-            }
-
-        }
-
-
-        @media (max-width: 500px) {
-
-            .container {
-                width: 94%;
+            .hero-description {
+                font-size: 13px;
             }
 
 
@@ -1133,21 +2176,89 @@
             }
 
 
-            .features-grid {
-                grid-template-columns:
-                    1fr;
+            .analyzer-heading {
+                align-items: flex-start;
+                flex-direction: column;
             }
 
 
-            .hero h2 {
-                font-size: 35px;
-
-                letter-spacing: -1px;
+            .input-row {
+                flex-direction: column;
             }
 
 
-            .hero p {
-                font-size: 14px;
+            .analyze-btn {
+                width: 100%;
+            }
+
+
+            .detail-grid,
+            .probabilities,
+            .feature-groups,
+            .modal-grid,
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .container {
+                width: 94%;
+            }
+
+
+            .brand-name {
+                font-size: 18px;
+            }
+
+
+            .brand-subtitle {
+                font-size: 8px;
+            }
+
+
+            .nav-button {
+                padding: 9px 8px;
+                font-size: 9px;
+            }
+
+
+            .system-status {
+                font-size: 8px;
+            }
+
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+
+            .url-input {
+                font-size: 13px;
+            }
+
+
+            .score-ring {
+                width: 145px;
+                height: 145px;
+            }
+
+
+            .score-number {
+                font-size: 26px;
+            }
+
+
+            .result-title {
+                font-size: 28px;
+            }
+
+
+            .modal-body {
+                padding: 20px;
             }
 
         }
@@ -1164,7 +2275,7 @@
 
 
     <!-- =====================================================
-         TOP BAR
+         HEADER
     ====================================================== -->
 
     <header class="topbar">
@@ -1172,31 +2283,76 @@
 
         <div class="brand">
 
-
+            <!-- ===== IMAGE LOGO ===== -->
             <div class="brand-icon">
-                🛡
+                <img 
+                    src="{{ url_for('static', filename='images/PhisGuard_icon.png') }}" 
+                    alt="PhishGuard Logo"
+                >
             </div>
 
 
-            <div class="brand-text">
+            <div>
 
-                <h1>
+                <div class="brand-name">
                     PhishGuard
-                </h1>
+                </div>
 
-                <p>
+
+                <div class="brand-subtitle">
                     URL Security Analysis
-                </p>
+                </div>
 
             </div>
-
 
         </div>
 
 
+        <nav class="nav-area">
+
+
+            <button
+                type="button"
+                class="nav-button active"
+                onclick="scrollToScanner()"
+            >
+                Scan
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-button"
+                onclick="openModal('aboutModal')"
+            >
+                About
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-button"
+                onclick="openModal('howModal')"
+            >
+                How It Works
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-button"
+                onclick="openModal('modelModal')"
+            >
+                Model
+            </button>
+
+
+        </nav>
+
+
         <div class="system-status">
 
-            <div class="status-dot"></div>
+            <span class="status-dot"></span>
 
             System Online
 
@@ -1204,7 +2360,6 @@
 
 
     </header>
-
 
 
     <!-- =====================================================
@@ -1215,13 +2370,11 @@
 
 
         <div class="hero-badge">
-
             Machine Learning Security Scanner
-
         </div>
 
 
-        <h2>
+        <h1>
 
             Detect suspicious websites
 
@@ -1229,14 +2382,15 @@
                 before you trust them.
             </span>
 
-        </h2>
+        </h1>
 
 
-        <p>
+        <p class="hero-description">
 
-            Analyze a website URL using machine-learning-based
-            phishing detection. The system examines URL characteristics
-            and learned patterns to identify potentially dangerous websites.
+            Analyze URL characteristics with a machine-learning
+            detection system designed to identify potentially
+            phishing websites and provide an understandable
+            security assessment.
 
         </p>
 
@@ -1244,24 +2398,113 @@
     </section>
 
 
+    <!-- =====================================================
+         MODEL STRIP
+    ====================================================== -->
+
+    <section class="model-strip">
+
+
+        <div class="model-card">
+
+            <div class="model-symbol">
+                S
+            </div>
+
+
+            <div>
+
+                <strong>
+                    V5 Linear SVM
+                </strong>
+
+                <span>
+                    Detection Engine
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="model-card">
+
+            <div class="model-symbol">
+                17
+            </div>
+
+
+            <div>
+
+                <strong>
+                    URL Features
+                </strong>
+
+                <span>
+                    Numeric Analysis
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="model-card">
+
+            <div class="model-symbol">
+                %
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Calibrated Output
+                </strong>
+
+                <span>
+                    Probability Estimate
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
 
     <!-- =====================================================
          ANALYZER
     ====================================================== -->
 
-    <section class="analyzer-card">
+    <section
+        class="analyzer-card"
+        id="scanner"
+    >
 
 
-        <div class="section-title">
-
-            <h3>
-                URL Security Analyzer
-            </h3>
+        <div class="analyzer-heading">
 
 
-            <span>
-                Real-time Analysis
-            </span>
+            <div>
+
+                <div class="eyebrow">
+                    Security Scanner
+                </div>
+
+
+                <h2>
+                    Analyze a Website URL
+                </h2>
+
+            </div>
+
+
+            <p>
+                URL Analysis Only
+            </p>
+
 
         </div>
 
@@ -1269,26 +2512,29 @@
         <form method="POST">
 
 
-            <div class="input-group">
+            <div class="input-row">
 
 
-                <input
-                    type="text"
-                    name="url"
-                    value="{{ url }}"
-                    placeholder="Enter website URL (e.g. https://example.com)"
-                    autocomplete="off"
-                    required
-                >
+                <div class="input-wrapper">
+
+                    <input
+                        class="url-input"
+                        type="text"
+                        name="url"
+                        value="{{ url }}"
+                        placeholder="Enter a website URL, e.g. https://example.com"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
 
 
                 <button
                     type="submit"
                     class="analyze-btn"
                 >
-
                     ANALYZE URL
-
                 </button>
 
 
@@ -1298,8 +2544,15 @@
         </form>
 
 
-    </section>
+        <div class="input-note">
 
+            PhishGuard evaluates URL structure without opening
+            the submitted website.
+
+        </div>
+
+
+    </section>
 
 
     <!-- =====================================================
@@ -1310,33 +2563,36 @@
 
 
     <section
-        class="result-card
-        {% if 'Phishing' in result %}
-            phishing
-        {% else %}
-            legitimate
-        {% endif %}"
+        class="
+            result-card
+            {% if 'Phishing' in result %}
+                phishing
+            {% else %}
+                legitimate
+            {% endif %}
+        "
     >
 
 
-        <!-- RESULT HEADER -->
-
-        <div class="result-header">
+        <div class="result-layout">
 
 
             <div class="result-main">
 
 
-                <div class="result-icon">
+                <div class="result-status">
+
+
+                    <span class="result-status-dot"></span>
 
 
                     {% if 'Phishing' in result %}
 
-                        !
+                        Potential Threat Detected
 
                     {% else %}
 
-                        ✓
+                        No Strong Phishing Pattern Detected
 
                     {% endif %}
 
@@ -1344,260 +2600,255 @@
                 </div>
 
 
-                <div>
+                <div class="result-title">
+                    {{ result }}
+                </div>
 
 
-                    <div class="result-title">
-
-                        {{ result }}
-
-                    </div>
-
-
-                    <div class="result-url">
-
-                        {{ url }}
-
-                    </div>
-
-
+                <div class="result-url">
+                    {{ url }}
                 </div>
 
 
             </div>
 
 
-
-            <!-- MODEL PROBABILITY -->
-
-            <div class="confidence">
-
-
-                <div class="confidence-label">
-
-                    Model Probability
-
-                </div>
-
-
-                <div class="confidence-value">
-
-
-                    {% if 'Phishing' in result %}
-
-                        {{ "%.2f"|format(
-                            phishing_probability * 100
-                        ) }}%
-
-                    {% else %}
-
-                        {{ "%.2f"|format(
-                            legitimate_probability * 100
-                        ) }}%
-
-                    {% endif %}
-
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             RISK ASSESSMENT
-        ================================================== -->
-
-        <div class="risk-assessment">
-
-
-            <div class="risk-header">
-
-
-                <div class="risk-title">
-
-                    Risk Assessment
-
-                </div>
+            <div class="score-area">
 
 
                 <div
-                    class="risk-badge
-                    {% if risk_level == 'HIGH RISK' %}
-                        risk-high
-                    {% elif risk_level == 'SUSPICIOUS' %}
-                        risk-suspicious
-                    {% else %}
-                        risk-low
-                    {% endif %}"
+                    class="score-ring"
+                    style="
+                        --score:
+                        {% if 'Phishing' in result %}
+                            {{ phishing_probability * 100 }}%
+                        {% else %}
+                            {{ legitimate_probability * 100 }}%
+                        {% endif %}
+                    "
                 >
 
-                    {{ risk_level }}
 
+                    <div class="score-content">
+
+
+                        <div class="score-number">
+
+
+                            {% if 'Phishing' in result %}
+
+                                {{ "%.2f"|format(
+                                    phishing_probability * 100
+                                ) }}%
+
+                            {% else %}
+
+                                {{ "%.2f"|format(
+                                    legitimate_probability * 100
+                                ) }}%
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <div class="score-label">
+                            Confidence
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="score-caption">
+                    Model Probability
                 </div>
 
 
             </div>
 
 
-            <div class="risk-reason">
-
-                {{ risk_reason }}
-
-            </div>
-
-
         </div>
-
 
 
         <!-- =================================================
-             EXPLANATION
+             DETAILS
         ================================================== -->
 
-        <div class="explanation">
+        <div class="detail-grid">
 
 
-            <div class="explanation-title">
+            <div class="detail-panel">
 
 
-                {% if 'Phishing' in result %}
+                <div class="panel-heading">
 
-                    ⚠ Why this URL was flagged
 
-                {% else %}
+                    <h3>
+                        Risk Assessment
+                    </h3>
 
-                    ✓ Why this URL was classified as legitimate
 
-                {% endif %}
+                    <div
+                        class="
+                            risk-badge
+                            {% if risk_level == 'HIGH RISK' %}
+                                risk-high
+                            {% elif risk_level == 'SUSPICIOUS' %}
+                                risk-suspicious
+                            {% else %}
+                                risk-low
+                            {% endif %}
+                        "
+                    >
+
+                        {{ risk_level }}
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="panel-text">
+                    {{ risk_reason }}
+                </div>
 
 
             </div>
 
 
-            <div>
+            <div class="detail-panel">
 
-                {{ explanation }}
+
+                <div class="panel-heading">
+
+
+                    <h3>
+                        Model Explanation
+                    </h3>
+
+
+                    <span>
+                        V5 Analysis
+                    </span>
+
+
+                </div>
+
+
+                <div class="panel-text">
+                    {{ explanation }}
+                </div>
+
 
             </div>
 
 
         </div>
-
 
 
         <!-- =================================================
              PROBABILITIES
         ================================================== -->
 
-        <div class="probability-section">
+        <div class="analysis-title">
 
 
-            <div class="section-title">
+            <h3>
+                Prediction Distribution
+            </h3>
 
 
-                <h3>
-                    Prediction Probabilities
-                </h3>
+            <span>
+                Calibrated Model Output
+            </span>
 
 
-                <span>
-                    Model Output
-                </span>
+        </div>
 
 
-            </div>
+        <div class="probabilities">
 
 
-            <div class="probability-grid">
+            <div class="probability-box">
 
 
-                <!-- PHISHING -->
-
-                <div class="probability-box">
+                <div class="probability-head">
 
 
-                    <div class="probability-top">
+                    <span>
+                        Phishing Probability
+                    </span>
 
 
-                        <span>
-                            Phishing Probability
-                        </span>
+                    <span class="probability-number">
 
+                        {{ "%.2f"|format(
+                            phishing_probability * 100
+                        ) }}%
 
-                        <span class="probability-value">
-
-                            {{ "%.2f"|format(
-                                phishing_probability * 100
-                            ) }}%
-
-                        </span>
-
-
-                    </div>
-
-
-                    <div class="progress">
-
-
-                        <div
-                            class="progress-bar phishing-bar"
-                            style="
-                                width:
-                                {{ phishing_probability * 100 }}%;
-                            "
-                        ></div>
-
-
-                    </div>
+                    </span>
 
 
                 </div>
 
 
-
-                <!-- LEGITIMATE -->
-
-                <div class="probability-box">
+                <div class="progress">
 
 
-                    <div class="probability-top">
+                    <div
+                        class="progress-bar phishing-bar"
+                        style="
+                            width:
+                            {{ phishing_probability * 100 }}%;
+                        "
+                    ></div>
 
 
-                        <span>
-                            Legitimate Probability
-                        </span>
+                </div>
 
 
-                        <span class="probability-value">
-
-                            {{ "%.2f"|format(
-                                legitimate_probability * 100
-                            ) }}%
-
-                        </span>
+            </div>
 
 
-                    </div>
+            <div class="probability-box">
 
 
-                    <div class="progress">
+                <div class="probability-head">
 
 
-                        <div
-                            class="progress-bar legitimate-bar"
-                            style="
-                                width:
-                                {{ legitimate_probability * 100 }}%;
-                            "
-                        ></div>
+                    <span>
+                        Legitimate Probability
+                    </span>
 
 
-                    </div>
+                    <span class="probability-number">
+
+                        {{ "%.2f"|format(
+                            legitimate_probability * 100
+                        ) }}%
+
+                    </span>
+
+
+                </div>
+
+
+                <div class="progress">
+
+
+                    <div
+                        class="progress-bar legitimate-bar"
+                        style="
+                            width:
+                            {{ legitimate_probability * 100 }}%;
+                        "
+                    ></div>
 
 
                 </div>
@@ -1609,60 +2860,88 @@
         </div>
 
 
-
         <!-- =================================================
-             URL CHARACTERISTICS
+             URL INTELLIGENCE
         ================================================== -->
 
         {% if features %}
 
 
-        <div class="features-section">
+        <div class="analysis-title">
 
 
-            <div class="features-title">
-
-                URL Characteristics Analyzed
-
-            </div>
+            <h3>
+                URL Intelligence
+            </h3>
 
 
-            <div class="features-grid">
+            <span>
+                17 Numerical Features
+            </span>
 
 
-                <div class="feature-box">
+        </div>
 
-                    <div class="feature-name">
-                        URL Length
-                    </div>
 
-                    <div class="feature-value">
-                        {{ features[0] }}
-                    </div>
+        <div class="feature-groups">
 
+
+            <!-- DOMAIN -->
+
+            <div class="feature-group">
+
+
+                <div class="group-label">
+                    Domain Structure
                 </div>
 
 
-                <div class="feature-box">
+                <div class="feature-item">
 
-                    <div class="feature-name">
+                    <span class="feature-label">
                         Domain Length
-                    </div>
+                    </span>
 
-                    <div class="feature-value">
+                    <span class="feature-value">
                         {{ features[1] }}
-                    </div>
+                    </span>
 
                 </div>
 
 
-                <div class="feature-box">
+                <div class="feature-item">
 
-                    <div class="feature-name">
+                    <span class="feature-label">
+                        TLD Length
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[3] }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Subdomains
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[4] }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
                         Domain is IP
-                    </div>
+                    </span>
 
-                    <div class="feature-value">
+                    <span class="feature-value">
 
                         {% if features[2] == 1 %}
                             Yes
@@ -1670,195 +2949,368 @@
                             No
                         {% endif %}
 
-                    </div>
+                    </span>
 
                 </div>
 
 
-                <div class="feature-box">
+            </div>
 
-                    <div class="feature-name">
-                        TLD Length
-                    </div>
 
-                    <div class="feature-value">
-                        {{ features[3] }}
-                    </div>
+            <!-- URL -->
+
+            <div class="feature-group">
+
+
+                <div class="group-label">
+                    URL Structure
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        URL Length
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[0] }}
+                    </span>
 
                 </div>
 
 
-                <div class="feature-box">
+                <div class="feature-item">
 
-                    <div class="feature-name">
-                        Number of Subdomains
-                    </div>
+                    <span class="feature-label">
+                        Letters
+                    </span>
 
-                    <div class="feature-value">
-                        {{ features[4] }}
-                    </div>
+                    <span class="feature-value">
+                        {{ features[8] }}
+                    </span>
 
                 </div>
 
 
-                <div class="feature-box">
+                <div class="feature-item">
 
-                    <div class="feature-name">
-                        Obfuscation Detected
-                    </div>
+                    <span class="feature-label">
+                        Digits
+                    </span>
 
-                    <div class="feature-value">
+                    <span class="feature-value">
+                        {{ features[10] }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Special Characters
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[15] }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- OBFUSCATION -->
+
+            <div class="feature-group">
+
+
+                <div class="group-label">
+                    Obfuscation
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Obfuscation
+                    </span>
+
+                    <span class="feature-value">
 
                         {% if features[5] == 1 %}
-                            Yes
+                            Detected
+                        {% else %}
+                            None
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Obfuscated Characters
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[6] }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Obfuscation Ratio
+                    </span>
+
+                    <span class="feature-value">
+                        {{ "%.4f"|format(features[7]) }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Special Ratio
+                    </span>
+
+                    <span class="feature-value">
+                        {{ "%.4f"|format(features[16]) }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- CHARACTERS -->
+
+            <div class="feature-group">
+
+
+                <div class="group-label">
+                    Character Analysis
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Letter Ratio
+                    </span>
+
+                    <span class="feature-value">
+                        {{ "%.4f"|format(features[9]) }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Digit Ratio
+                    </span>
+
+                    <span class="feature-value">
+                        {{ "%.4f"|format(features[11]) }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Equal Signs
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[12] }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Question Marks
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[13] }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- QUERY -->
+
+            <div class="feature-group">
+
+
+                <div class="group-label">
+                    Query Structure
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Ampersands
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[14] }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Equal Signs
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[12] }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Question Marks
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[13] }}
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Special Characters
+                    </span>
+
+                    <span class="feature-value">
+                        {{ features[15] }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="feature-group">
+
+
+                <div class="group-label">
+                    Signal Summary
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        URL Complexity
+                    </span>
+
+                    <span class="feature-value">
+
+                        {% if features[0] > 75 %}
+                            High
+                        {% elif features[0] > 40 %}
+                            Moderate
+                        {% else %}
+                            Low
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Domain Complexity
+                    </span>
+
+                    <span class="feature-value">
+
+                        {% if features[1] > 40 %}
+                            High
+                        {% elif features[1] > 20 %}
+                            Moderate
+                        {% else %}
+                            Low
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        Subdomain Level
+                    </span>
+
+                    <span class="feature-value">
+
+                        {% if features[4] >= 3 %}
+                            High
+                        {% elif features[4] >= 1 %}
+                            Present
+                        {% else %}
+                            None
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-label">
+                        IP Address
+                    </span>
+
+                    <span class="feature-value">
+
+                        {% if features[2] == 1 %}
+                            Detected
                         {% else %}
                             No
                         {% endif %}
 
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Obfuscated Characters
-                    </div>
-
-                    <div class="feature-value">
-                        {{ features[6] }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Obfuscation Ratio
-                    </div>
-
-                    <div class="feature-value">
-                        {{ "%.4f"|format(features[7]) }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Letters in URL
-                    </div>
-
-                    <div class="feature-value">
-                        {{ features[8] }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Letter Ratio
-                    </div>
-
-                    <div class="feature-value">
-                        {{ "%.4f"|format(features[9]) }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Digits in URL
-                    </div>
-
-                    <div class="feature-value">
-                        {{ features[10] }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Digit Ratio
-                    </div>
-
-                    <div class="feature-value">
-                        {{ "%.4f"|format(features[11]) }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Equal Signs
-                    </div>
-
-                    <div class="feature-value">
-                        {{ features[12] }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Question Marks
-                    </div>
-
-                    <div class="feature-value">
-                        {{ features[13] }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Ampersands
-                    </div>
-
-                    <div class="feature-value">
-                        {{ features[14] }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Other Special Characters
-                    </div>
-
-                    <div class="feature-value">
-                        {{ features[15] }}
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-name">
-                        Special Character Ratio
-                    </div>
-
-                    <div class="feature-value">
-                        {{ "%.4f"|format(features[16]) }}
-                    </div>
+                    </span>
 
                 </div>
 
@@ -1872,25 +3324,22 @@
         {% endif %}
 
 
-
         <!-- =================================================
              DISCLAIMER
         ================================================== -->
 
         <div class="disclaimer">
 
-
             <strong>
                 Security Notice:
             </strong>
 
-
-            This prediction is generated by a machine-learning model.
-            A legitimate result does not guarantee that a website is completely
-            safe, and a phishing result does not by itself prove malicious activity.
-            Always verify the website domain and avoid entering sensitive
-            information on suspicious websites.
-
+            PhishGuard provides a machine-learning-based assessment
+            of URL characteristics. A legitimate result does not
+            guarantee that a website is safe, and a phishing result
+            does not by itself prove malicious activity. Always verify
+            the website and avoid entering sensitive information on
+            suspicious pages.
 
         </div>
 
@@ -1899,7 +3348,6 @@
 
 
     {% endif %}
-
 
 
     <!-- =====================================================
@@ -1921,15 +3369,7 @@
 
 
         <div class="copyright">
-
-            PhishGuard |
-
-            <span>
-                Phishing Website Detection System
-            </span>
-
-            © 2026
-
+            PhishGuard · Phishing Website Detection System · © 2026
         </div>
 
 
@@ -1937,6 +3377,619 @@
 
 
 </div>
+
+
+<!-- =========================================================
+     ABOUT MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="aboutModal"
+    onclick="overlayClose(event, 'aboutModal')"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-top">
+
+
+            <div>
+
+                <div class="eyebrow">
+                    Project Overview
+                </div>
+
+                <div class="modal-title">
+                    About PhishGuard
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-modal"
+                onclick="closeModal('aboutModal')"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <p class="modal-intro">
+
+                PhishGuard is a machine-learning-based phishing
+                website detection system developed as a cybersecurity
+                and machine-learning portfolio project. It analyzes
+                the characteristics of a submitted URL without
+                opening the website.
+
+            </p>
+
+
+            <div class="modal-grid">
+
+
+                <div class="modal-info">
+
+                    <div class="modal-info-label">
+                        Detection Model
+                    </div>
+
+                    <div class="modal-info-value">
+                        V5 Linear Support Vector Machine
+                    </div>
+
+                </div>
+
+
+                <div class="modal-info">
+
+                    <div class="modal-info-label">
+                        Feature Representation
+                    </div>
+
+                    <div class="modal-info-value">
+                        Character-level TF-IDF + 17 numerical URL features
+                    </div>
+
+                </div>
+
+
+                <div class="modal-info">
+
+                    <div class="modal-info-label">
+                        Web Framework
+                    </div>
+
+                    <div class="modal-info-value">
+                        Python + Flask
+                    </div>
+
+                </div>
+
+
+                <div class="modal-info">
+
+                    <div class="modal-info-label">
+                        Probability
+                    </div>
+
+                    <div class="modal-info-value">
+                        Validation-set calibrated SVM output
+                    </div>
+
+                </div>
+
+
+                <div class="modal-info">
+
+                    <div class="modal-info-label">
+                        Dataset
+                    </div>
+
+                    <div class="modal-info-value">
+                        UCI PhiUSIIL Phishing URL Dataset
+                    </div>
+
+                </div>
+
+
+                <div class="modal-info">
+
+                    <div class="modal-info-label">
+                        Developer
+                    </div>
+
+                    <div class="modal-info-value">
+                        Joar Cristobal
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="model-note">
+
+                PhishGuard is a research prototype. Its prediction
+                represents the model's assessment of URL characteristics
+                and should not be treated as definitive proof that a
+                website is safe or malicious.
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     HOW IT WORKS MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="howModal"
+    onclick="overlayClose(event, 'howModal')"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-top">
+
+
+            <div>
+
+                <div class="eyebrow">
+                    Detection Pipeline
+                </div>
+
+                <div class="modal-title">
+                    How PhishGuard Works
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-modal"
+                onclick="closeModal('howModal')"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <p class="modal-intro">
+
+                Every submitted URL passes through a sequence of
+                local processing and machine-learning stages before
+                the application produces a final security assessment.
+
+            </p>
+
+
+            <div class="pipeline">
+
+
+                <div class="pipeline-step">
+
+                    <div class="pipeline-number">
+                        01
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            URL Input
+                        </h3>
+
+
+                        <p>
+                            The user submits a website URL through
+                            the Flask application.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="pipeline-number">
+                        02
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Feature Extraction
+                        </h3>
+
+
+                        <p>
+                            Character-level TF-IDF and 17 numerical
+                            URL characteristics are generated from
+                            the submitted URL.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="pipeline-number">
+                        03
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            V5 Linear SVM
+                        </h3>
+
+
+                        <p>
+                            The combined URL representation is
+                            evaluated by the V5 Linear SVM to produce
+                            a classification decision score.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="pipeline-number">
+                        04
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Calibration & Risk Assessment
+                        </h3>
+
+
+                        <p>
+                            The SVM decision score is calibrated into
+                            a probability estimate and passed to the
+                            risk assessment system.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     MODEL MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="modelModal"
+    onclick="overlayClose(event, 'modelModal')"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-top">
+
+
+            <div>
+
+                <div class="eyebrow">
+                    Model Performance
+                </div>
+
+                <div class="modal-title">
+                    V5 Model
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-modal"
+                onclick="closeModal('modelModal')"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <p class="modal-intro">
+
+                The V5 Linear SVM was evaluated using a
+                registrable-domain-disjoint train, validation,
+                and test split.
+
+            </p>
+
+
+            <div class="metric-grid">
+
+
+                <div class="metric-card">
+
+                    <div class="metric-value">
+                        99.46%
+                    </div>
+
+                    <div class="metric-name">
+                        Accuracy
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <div class="metric-value">
+                        99.86%
+                    </div>
+
+                    <div class="metric-name">
+                        Precision
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <div class="metric-value">
+                        98.82%
+                    </div>
+
+                    <div class="metric-name">
+                        Phishing Recall
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <div class="metric-value">
+                        99.34%
+                    </div>
+
+                    <div class="metric-name">
+                        F1 Score
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="model-note">
+
+                These metrics apply to the constructed domain-disjoint
+                evaluation dataset and should not be interpreted as
+                universal real-world accuracy.
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       SCROLL TO SCANNER
+    ====================================================== */
+
+    function scrollToScanner() {
+
+        const scanner =
+            document.getElementById("scanner");
+
+        if (!scanner) {
+            return;
+        }
+
+
+        scanner.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+
+    /* =====================================================
+       OPEN MODAL
+    ====================================================== */
+
+    function openModal(id) {
+
+        const modal =
+            document.getElementById(id);
+
+        if (!modal) {
+            return;
+        }
+
+
+        modal.classList.add("active");
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE MODAL
+    ====================================================== */
+
+    function closeModal(id) {
+
+        const modal =
+            document.getElementById(id);
+
+        if (!modal) {
+            return;
+        }
+
+
+        modal.classList.remove("active");
+
+        document.body.classList.remove(
+            "modal-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE WHEN CLICKING OUTSIDE
+    ====================================================== */
+
+    function overlayClose(
+        event,
+        id
+    ) {
+
+        if (
+            event.target ===
+            document.getElementById(id)
+        ) {
+
+            closeModal(id);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ESCAPE KEY
+    ====================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key !==
+                "Escape"
+            ) {
+                return;
+            }
+
+
+            closeModal("aboutModal");
+
+            closeModal("howModal");
+
+            closeModal("modelModal");
+
+        }
+    );
+
+
+    /* =====================================================
+       SCAN BUTTON
+    ====================================================== */
+
+    const scanForm =
+        document.querySelector("form");
+
+
+    if (scanForm) {
+
+        scanForm.addEventListener(
+            "submit",
+            function() {
+
+                const button =
+                    scanForm.querySelector(
+                        ".analyze-btn"
+                    );
+
+
+                if (!button) {
+                    return;
+                }
+
+
+                button.disabled = true;
+
+
+                button.innerHTML =
+                    "◉ ANALYZING URL...";
+
+            }
+        );
+
+    }
+
+</script>
 
 
 </body>
