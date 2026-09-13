@@ -2,57 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                # ================================
 # Python virtual environment
 # ================================
@@ -127,3 +76,12 @@ final_phishtank_stress_test.csv
 .vscode/
 .idea/
 *.log
+
+
+
+# Local backups
+README_backup_old.md
+app_v4_backup.py
+
+# External intelligence feed
+external_intelligence/

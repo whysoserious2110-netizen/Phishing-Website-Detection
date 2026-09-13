@@ -9,25 +9,31 @@ from feature_extractor_no_https import (
 )
 
 from url_normalizer import normalize_url
+from domain_analyzer import analyze_domain
+from risk_engine import calculate_risk
 
 
 app = Flask(__name__)
 
 
 # --------------------------------------------------
-# Load V4 hybrid model components
+# Load V5 hybrid SVM model components
 # --------------------------------------------------
 
 model = joblib.load(
-    "hybrid_url_model_v4.pkl"
+    "hybrid_url_svm_v5.pkl"
 )
 
 vectorizer = joblib.load(
-    "hybrid_url_vectorizer_v4.pkl"
+    "hybrid_url_svm_vectorizer_v5.pkl"
 )
 
 scaler = joblib.load(
-    "hybrid_url_scaler_v4.pkl"
+    "hybrid_url_svm_scaler_v5.pkl"
+)
+
+calibrator = joblib.load(
+    "hybrid_url_svm_v5_calibrator.pkl"
 )
 
 
@@ -256,8 +262,8 @@ def predict_url(url):
 
 
     scaled_numeric = scaler.transform(
-        numeric_df
-    )
+    numeric_df.to_numpy()
+)
 
 
     scaled_numeric = csr_matrix(
@@ -291,23 +297,24 @@ def predict_url(url):
     )
 
 
-    probabilities = model.predict_proba(
+    # --------------------------------------------------
+# Convert SVM decision score to calibrated probability
+# --------------------------------------------------
+
+    decision_score = model.decision_function(
         combined_features
     )[0]
+
+    legitimate_probability = calibrator.predict_proba(
+        [[decision_score]]
+    )[0, 1]
+
+    phishing_probability = 1.0 - legitimate_probability
 
 
     # Model class:
     # 0 = phishing
     # 1 = legitimate
-
-    phishing_probability = probabilities[
-        list(model.classes_).index(0)
-    ]
-
-
-    legitimate_probability = probabilities[
-        list(model.classes_).index(1)
-    ]
 
 
     # ----------------------------------------------
@@ -324,6 +331,46 @@ def predict_url(url):
 
 
     # ----------------------------------------------
+    # Domain analysis
+    # ----------------------------------------------
+
+    domain_info = analyze_domain(
+        url
+    )
+
+
+    is_ip_address = domain_info[
+        "is_ip_address"
+    ]
+
+    subdomain_count = domain_info[
+        "subdomain_count"
+    ]
+
+
+    # ----------------------------------------------
+    # Risk assessment
+    # ----------------------------------------------
+
+    risk_assessment = calculate_risk(
+        prediction,
+        phishing_probability,
+        legitimate_probability,
+        is_ip_address,
+        subdomain_count
+    )
+
+
+    risk_level = risk_assessment[
+        "risk_level"
+    ]
+
+    risk_reason = risk_assessment[
+        "reason"
+    ]
+
+
+    # ----------------------------------------------
     # Explanation
     # ----------------------------------------------
 
@@ -335,12 +382,18 @@ def predict_url(url):
     )
 
 
+    # ----------------------------------------------
+    # Return results
+    # ----------------------------------------------
+
     return (
         result,
         phishing_probability,
         legitimate_probability,
         numeric_features,
-        explanation
+        explanation,
+        risk_level,
+        risk_reason
     )
 
 
@@ -363,6 +416,9 @@ def home():
     features = None
     explanation = None
 
+    risk_level = None
+    risk_reason = None
+
 
     if request.method == "POST":
 
@@ -379,7 +435,9 @@ def home():
                 phishing_probability,
                 legitimate_probability,
                 features,
-                explanation
+                explanation,
+                risk_level,
+                risk_reason
             ) = predict_url(url)
 
 
@@ -390,7 +448,9 @@ def home():
         phishing_probability=phishing_probability,
         legitimate_probability=legitimate_probability,
         features=features,
-        explanation=explanation
+        explanation=explanation,
+        risk_level=risk_level,
+        risk_reason=risk_reason
     )
 
 
